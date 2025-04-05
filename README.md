@@ -2,13 +2,13 @@
 
 A modern and responsive e-commerce web application built using **React.js**, with sleek UI, product listings, and dynamic cart management.
 
-![React E-Commerce Preview](./screenshots/preview-home.png)
+![React E-Commerce Preview](Screenshot_5-4-2025_14051_ecommerce-80bbd.web.app.jpeg)
 
 ## 🚀 Live Demo
 
 🔗 [View Live Demo](https://ecommerce-80bbd.web.app/)
 
-> *(Replace the above link with your actual deployed URL)*
+
 
 ---
 
@@ -41,5 +41,5 @@ A modern and responsive e-commerce web application built using **React.js**, wit
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/yourusername/react-ecommerce.git
-   cd react-ecommerce
+   git clone https://github.com/aniketdobriyal/E-commerce-shopify.git
+   cd -app
