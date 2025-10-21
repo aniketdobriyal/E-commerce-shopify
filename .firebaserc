@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "web-app-87f66"
+  },
+  "targets": {
+    "web-app-87f66": {
+      "hosting": {
+        "ecommerce-80bbd": [
+          "ecommerce-80bbd"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
