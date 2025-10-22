@@ -44,9 +44,15 @@ export default function ProfileCard() {
     const queryParams = new URLSearchParams(location.search);
     const sectionFromURL = queryParams.get("section") || "dashboard";
     setActiveSection(sectionFromURL);
-    if (isMobile) setMobileView("main");
-    else setMobileView("main");
-  }, [location.search]);
+
+    if (isMobile) {
+      // Only "My Profile" opens sidebar on mobile
+      if (sectionFromURL === "dashboard") setMobileView("sidebar");
+      else setMobileView("main");
+    } else {
+      setMobileView("main");
+    }
+  }, [location.search, isMobile]);
 
   // Window resize
   useEffect(() => {
@@ -109,17 +115,12 @@ export default function ProfileCard() {
 
   return (
     <>
-      {/* Desktop Navbar */}
-     {!isMobile && <Navbar />}
+      {!isMobile && <Navbar />}
 
       <div className="pc-container">
-        {/* Sidebar */}
         {(mobileView === "sidebar" || !isMobile) && (
           <>
-            {/* Mobile Top Navbar while sidebar is open */}
-            {isMobile && mobileView === "sidebar" && (
-              <Navbar />
-            )}
+            {isMobile && mobileView === "sidebar" && <Navbar />}
             <aside className="pc-sidebar">
               <div className="pc-brand">BrandCo</div>
               <nav>
@@ -151,14 +152,12 @@ export default function ProfileCard() {
           </>
         )}
 
-        {/* Main content */}
         {(mobileView === "main" || !isMobile) && (
           <main className="pc-main">
-            {/* Mobile Top Navbar with Back button */}
             {isMobile && mobileView === "main" && (
-              <div className="mobile-top-navbar bg-light ">
-                <button className="back-btn text-dark " onClick={handleMobileBack}>
-                  <ArrowLeft size={25} /> 
+              <div className="mobile-top-navbar bg-light">
+                <button className="back-btn text-dark" onClick={handleMobileBack}>
+                  <ArrowLeft size={25} />
                 </button>
               </div>
             )}
@@ -179,18 +178,13 @@ export default function ProfileCard() {
           .nav-divider { border-top:1px solid #eef2f6; margin:1.5rem 0; }
           .pc-main { flex: 1; padding: 28px; overflow-y: auto; height: 100vh; background: #fff; position: relative; }
           .content-scroll-wrapper { max-width: 1100px; margin: 0 auto; }
-
-          /* Mobile top navbar */
           .mobile-top-navbar { display: flex; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 15; }
           .mobile-top-navbar .back-btn { display: flex; align-items: center; gap: 6px; font-size: 1.1rem; font-weight: 700; border: none; background: none; color: #2563eb; cursor: pointer; }
-          .mobile-top-navbar .mobile-title { margin-left: 12px; font-weight: 600; font-size: 1rem; color: #0f172a; }
-
           @media (max-width: 900px) {
             .pc-container { flex-direction: column; }
             .pc-sidebar { width: 100%; max-width: 100%; height: 100vh; padding: 16px; border-right: none; }
             .pc-main { padding: 0; min-height: auto; height: auto; }
           }
-
           html, body { overscroll-behavior-y: contain; overscroll-behavior-x: none; }
         `}</style>
       </div>
