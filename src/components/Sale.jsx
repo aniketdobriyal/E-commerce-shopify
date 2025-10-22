@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Spinner, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -54,21 +54,21 @@ export default function Sale() {
     <>
       <Navbar />
 
-      <Container className="py-5">
-        <h2 className="fw-bold mb-4 text-center text-danger text-uppercase">Flash Sale</h2>
+      <Container className="py-4">
+        <h2 className="fw-bold text-center mb-4 text-danger text-uppercase">Flash Sale</h2>
 
         {loading ? (
           <div className="text-center my-5">
             <Spinner animation="border" variant="danger" />
           </div>
         ) : (
-          <Row className="g-4">
+          <Row className="g-3">
             {saleProducts.map((item) => (
               <Col key={item.id} xs={6} sm={6} md={4} lg={3} className="d-flex align-items-stretch">
                 <Card
                   as={Link}
                   to={`/product/${item.id}`}
-                  className="shadow-sm border-0 rounded-4 h-100 position-relative text-decoration-none text-dark overflow-hidden"
+                  className="shadow-sm border-0 rounded-4 w-100 h-100 text-decoration-none text-dark position-relative"
                   style={{ transition: "transform 0.3s ease", cursor: "pointer" }}
                   onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-5px)")}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
@@ -95,7 +95,7 @@ export default function Sale() {
                   {/* Image Container */}
                   <div
                     style={{
-                      height: "220px",
+                      height: "200px",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -110,7 +110,7 @@ export default function Sale() {
                       variant="top"
                       src={item.image}
                       alt={item.title}
-                      style={{ maxHeight: "180px", width: "auto", objectFit: "contain" }}
+                      style={{ maxHeight: "150px", width: "auto", objectFit: "contain" }}
                     />
                   </div>
 

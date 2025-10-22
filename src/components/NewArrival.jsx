@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Badge, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Spinner, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -10,21 +10,18 @@ export default function NewArrival() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products?limit=8");
-        const data = await res.json();
+    fetch("https://fakestoreapi.com/products?limit=8")
+      .then((res) => res.json())
+      .then((data) => {
         setProducts(data);
-      } catch (error) {
-        console.error("Error fetching new arrivals:", error);
-      } finally {
         setLoading(false);
-      }
-    }
-    fetchProducts();
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+        setLoading(false);
+      });
   }, []);
 
-  // ⭐ Star Rating Component
   const StarRating = ({ rating }) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
@@ -47,21 +44,21 @@ export default function NewArrival() {
     <>
       <Navbar />
 
-      <Container className="py-5">
-        <h2 className="fw-bold mb-4 text-center text-primary">New Arrivals</h2>
+      <Container className="py-4">
+        <h2 className="fw-bold text-center mb-4 text-primary">New Arrivals</h2>
 
         {loading ? (
           <div className="text-center my-5">
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Row className="g-4">
+          <Row className="g-3">
             {products.map((item) => (
               <Col key={item.id} xs={6} sm={6} md={4} lg={3} className="d-flex align-items-stretch">
                 <Card
                   as={Link}
                   to={`/product/${item.id}`}
-                  className="shadow-sm border-0 rounded-4 h-100 position-relative text-decoration-none text-dark"
+                  className="shadow-sm border-0 rounded-4 w-100 h-100 text-decoration-none text-dark position-relative"
                   style={{ transition: "transform 0.3s ease", cursor: "pointer" }}
                   onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-5px)")}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
@@ -76,7 +73,7 @@ export default function NewArrival() {
                     New
                   </Badge>
 
-                  {/* Image Container */}
+                  {/* Image */}
                   <div
                     style={{
                       height: "200px",
@@ -92,8 +89,8 @@ export default function NewArrival() {
                   >
                     <Card.Img
                       variant="top"
-                      src={item.image || ""}
-                      alt={item.title || "Product"}
+                      src={item.image}
+                      alt={item.title}
                       style={{ maxHeight: "150px", maxWidth: "100%", objectFit: "contain" }}
                     />
                   </div>
@@ -105,13 +102,13 @@ export default function NewArrival() {
                       title={item.title}
                       style={{ minHeight: "38px" }}
                     >
-                      {item.title || "Unnamed Product"}
+                      {item.title}
                     </Card.Title>
 
                     <StarRating rating={item.rating?.rate || 0} />
 
                     <Card.Text className="text-success fw-bold fs-5 mb-2">
-                      ${item.price ? item.price.toFixed(2) : "0.00"}
+                      ${item.price.toFixed(2)}
                     </Card.Text>
 
                     <Button variant="dark" size="sm" className="rounded-4 px-3 mt-auto">

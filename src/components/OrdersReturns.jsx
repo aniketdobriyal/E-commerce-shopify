@@ -61,7 +61,7 @@ export default function OrdersReturns() {
 
                     <div className="d-flex flex-column gap-1 align-items-end action-buttons">
                       {item.status === "Delivered" && <>
-                        <Button size="sm" className="rounded-5 btn-success px-2 py-1">Buy Again</Button>
+                        <Button size="sm" className="rounded-5 btn-success px-2  py-1">Buy Again</Button>
                         <Button size="sm" variant="outline-danger" className="rounded-5 px-2 py-1">Return</Button>
                       </>}
                       {item.status === "Shipped" && (
