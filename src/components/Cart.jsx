@@ -49,7 +49,6 @@ export default function Cart({ cartItems = [], removeFromCart }) {
       <Navbar />
 
       <Container className="py-5">
-        <h2 className="fw-bold mb-4 text-center">Your Shopping Cart</h2>
 
         <Row className="gy-3">
           {itemsToDisplay.map((item) => (

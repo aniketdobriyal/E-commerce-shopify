@@ -52,15 +52,11 @@ export default function Coupons() {
   };
 
   return (
-    <div style={{ backgroundColor: "#f7f8fa", minHeight: "100vh" }}>
+    <div style={{  minHeight: "100vh" }}>
      
 
-      <Container className="">
-        <h2 className="fw-bold mb-4 text-center d-flex justify-content-center align-items-center">
-          <Tag size={28} className="me-2 text-warning" />
-          Your Coupons
-        </h2>
-
+      <Container className="  p-3">
+   
         {loading ? (
 
           
@@ -69,7 +65,7 @@ export default function Coupons() {
           <Row className="gy-3">
             {coupons.map((c) => (
               <Col key={c.id} xs={12} md={6} lg={4}>
-                <Card className="shadow-sm border-0 rounded-4 overflow-hidden">
+                <Card className="shadow-sm border-0   rounded-4 overflow-hidden">
                   {/* Image */}
                   <div style={{ height: "150px", overflow: "hidden" }}>
                     <Image

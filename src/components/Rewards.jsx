@@ -63,14 +63,12 @@ export default function Rewards() {
   }
 
   return (
-    <div style={{ backgroundColor: "#f7f8fa", minHeight: "100vh" }}>
+    <div style={{  minHeight: "100vh" }}>
       
       <Container>
 
         
-        <h2 className="fw-bold mb-3 text-center d-flex justify-content-center align-items-center">
-          <Gift size={28} color="#eab308" className="me-2" /> My Rewards
-        </h2>
+      
         <p className="text-center text-muted mb-4">
           You have <strong>{points}</strong> reward points 🏆
         </p>

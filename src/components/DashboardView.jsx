@@ -1,152 +1,152 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
-import { MapPin } from "lucide-react";
+import React from "react";
+import { Mail, Phone, MapPin, User, Edit3 } from "lucide-react";
 
-export default function DashboardView({ user, handleNavClick }) {
-  const [editSection, setEditSection] = useState(null);
-  const [formData, setFormData] = useState({
-    name: user.name,
-    gender: user.gender || "",
-    email: user.email,
-    phone: user.phone,
-    address: `${user.city}, ${user.state}, ${user.country} - ${user.postal}`
-  });
-
-  const handleEditClick = (section) => setEditSection(section);
-
-  const handleSave = (section) => {
-    console.log(`Saved ${section}:`, formData[section] || formData);
-    setEditSection(null);
-  };
-
-  const handleChange = (field, value) => setFormData(prev => ({ ...prev, [field]: value }));
-
-  const renderPersonalInfo = () => (
-    <>
-      <Form.Group className="mb-3 d-flex align-items-center">
-        <Form.Label className="text-muted fw-semibold" style={{ width: "25%" }}>Name</Form.Label>
-        <Form.Control
-          type="text"
-          value={formData.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          disabled={editSection !== "personal"}
-          style={{ width: "60%" }}
-        />
-           {editSection === "personal" && (
-        <Button variant="primary" className="mx-2" onClick={() => handleSave("personal")}>Save</Button>
-      )}
-      </Form.Group>
-      <Form.Group className="mb-3 d-flex align-items-center">
-        
-        <Form.Label className="text-muted fw-semibold" style={{ width: "25%" }}>Gender</Form.Label>
-        <div style={{ width: "60%" }} className="d-flex gap-3">
-          {["Male", "Female", "Other"].map(g => (
-            <Form.Check
-              key={g}
-              type="radio"
-              name="gender"
-              label={g}
-              value={g}
-              checked={formData.gender === g}
-              onChange={(e) => handleChange("gender", e.target.value)}
-              disabled={editSection !== "personal"}
-            />
-          ))}
-          
-        </div>
-      </Form.Group>
-   
-    </>
-  );
-
-  const sectionRow = (label, field, isTextarea = false) => (
-    <Form.Group className="mb-3 d-flex align-items-center">
-      <Form.Label className="text-muted fw-semibold" style={{ width: "25%" }}>{label}</Form.Label>
-      <div style={{ width: "60%" }}>
-        <Form.Control
-          as={isTextarea ? "textarea" : "input"}
-          rows={isTextarea ? 2 : undefined}
-          value={formData[field]}
-          onChange={(e) => handleChange(field, e.target.value)}
-          disabled={editSection !== field}
-        />
-      </div>
-      {editSection === field && (
-        <Button variant="primary" className="ms-2" onClick={() => handleSave(field)}>Save</Button>
-      )}
-    </Form.Group>
-  );
-
+export default function DashboardView({ user, onEdit }) {
   return (
-    <Container className="py-4">
+    <div className="personal-info-container">
+      <div className="info-header">
+        <h4>Personal Information</h4>
+        <button className="edit-btn" onClick={onEdit}>
+          <Edit3 size={16} /> Edit
+        </button>
+      </div>
 
+      <div className="info-grid">
+        <div className="info-card">
+          <User className="info-icon text-primary" />
+          <div>
+            <p className="info-label">Full Name</p>
+            <p className="info-value">{user.name || "John Doe"}</p>
+          </div>
+        </div>
 
-      <Card className="shadow-sm rounded-4 mb-5 p-4" style={{ backgroundColor: "#fff" }}>
-        <Row className="align-items-start">
-          <Col xs={12} md={2} className="text-center mb-3 mb-md-0">
-            <div
-              style={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "50%",
-                backgroundColor: "#d1d5db",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "32px",
-                color: "#fff",
-                fontWeight: "700",
-              }}
-            >
-              {user.name.charAt(0)}
-            </div>
-          </Col>
+        <div className="info-card">
+          <Mail className="info-icon text-danger" />
+          <div>
+            <p className="info-label">Email Address</p>
+            <p className="info-value">{user.email || "user@example.com"}</p>
+          </div>
+        </div>
 
-          <Col xs={12} md={10}>
-            {/* Personal Information */}
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h5 className="fw-bold mb-0">Personal Information</h5>
-              <Button
-                variant="link"
-                className="p-0 fw-bold text-decoration-none"
-                onClick={() => handleEditClick("personal")}
-              >
-                Edit
-              </Button>
-            </div>
-            {renderPersonalInfo()}
+        <div className="info-card">
+          <Phone className="info-icon text-success" />
+          <div>
+            <p className="info-label">Phone Number</p>
+            <p className="info-value">{user.phone || "+91 9876543210"}</p>
+          </div>
+        </div>
 
-            {/* Email */}
-            <div className="d-flex justify-content-between align-items-center mt-4 mb-2">
-              <h5 className="fw-bold mb-0">Email Address</h5>
-              <Button
-                variant="link"
-                className="p-0 fw-bold text-decoration-none"
-                onClick={() => handleEditClick("email")}
-              >
-                Edit
-              </Button>
-            </div>
-            {sectionRow("Email", "email")}
+        <div className="info-card">
+          <MapPin className="info-icon text-warning" />
+          <div>
+            <p className="info-label">Address</p>
+            <p className="info-value">
+              {user.address || "123, City Center, New Delhi, India"}
+            </p>
+          </div>
+        </div>
+      </div>
 
-            {/* Phone */}
-            <div className="d-flex justify-content-between align-items-center mt-4 mb-2">
-              <h5 className="fw-bold mb-0">Mobile Number</h5>
-              <Button
-                variant="link"
-                className="p-0 fw-bold text-decoration-none"
-                onClick={() => handleEditClick("phone")}
-              >
-                Edit
-              </Button>
-            </div>
-            {sectionRow("Phone", "phone")}
+      <style>{`
+        .personal-info-container {
+          background: linear-gradient(120deg, #f8fafc, #ffffff);
+          border-radius: 16px;
+          padding: 24px;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+          border: 1px solid #e2e8f0;
+          max-width: 900px;
+          margin: 20px auto;
+          transition: all 0.3s ease;
+        }
 
-            {/* Address */}
-         
-          </Col>
-        </Row>
-      </Card>
-    </Container>
+        .info-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+
+        .info-header h4 {
+          margin: 0;
+          font-weight: 700;
+          color: #1e293b;
+        }
+
+        .edit-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: #2563eb;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 6px 12px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.25s ease;
+        }
+
+        .edit-btn:hover {
+          background: #1d4ed8;
+        }
+
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 18px;
+        }
+
+        .info-card {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 14px 16px;
+          border-radius: 12px;
+          background: #f9fafb;
+          border: 1px solid #e2e8f0;
+          transition: all 0.25s ease;
+          cursor: default;
+        }
+
+        .info-card:hover {
+          background: #eef6ff;
+          box-shadow: 0 4px 12px rgba(37,99,235,0.08);
+          transform: translateY(-2px);
+        }
+
+        .info-icon {
+          flex-shrink: 0;
+          opacity: 0.9;
+        }
+
+        .info-label {
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: #64748b;
+          margin: 0;
+          font-weight: 600;
+        }
+
+        .info-value {
+          font-size: 0.95rem;
+          color: #1e293b;
+          margin: 2px 0 0;
+          font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+          .personal-info-container {
+            padding: 18px;
+          }
+
+          .edit-btn {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
