@@ -23,7 +23,7 @@ function Slides() {
   ];
 
   return (
-    <div className="hero-section">
+    <div className="hero-section ">
       <Carousel interval={3000} pause={false} indicators={true} controls={true}>
         {slides.map((slide, index) => (
           <Carousel.Item key={index} style={{ maxHeight: '60vh' }}>

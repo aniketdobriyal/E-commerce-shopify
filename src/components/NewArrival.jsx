@@ -45,7 +45,7 @@ export default function NewArrival() {
       <Navbar />
 
       <Container className="py-4">
-        <h2 className="fw-bold text-center mb-4 text-primary">New Arrivals</h2>
+        <h2 className="fw-bold fs-4  mb-4  " style={{fontFamily:"font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",color:'#494949ff'}}>Latest Collection</h2>
 
         {loading ? (
           <div className="text-center my-5">

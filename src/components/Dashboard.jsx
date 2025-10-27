@@ -2,8 +2,6 @@ import React from 'react'
 import Navbar from './Navbar'
 import Slides from './Slides'
 import Products from './Products'
-
-import StaticNavbar from './StaticNavbar'
 import Footer from './Footer'
 import ProductQueue from './ProductQueue'
 
@@ -13,6 +11,7 @@ export default function Dashboard() {
     <div>
      
       <Navbar/>
+      
        <Slides/>
        <ProductQueue/>
        <Products/>
