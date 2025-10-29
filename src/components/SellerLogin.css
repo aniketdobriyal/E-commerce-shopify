@@ -1,0 +1,14 @@
+.seller-login-container {
+  background: linear-gradient(135deg, #f8f9fa, #e0e0e0);
+}
+
+.seller-login-card {
+  width: 350px;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.seller-login-card h3 {
+  font-weight: 600;
+  color: #333;
+}

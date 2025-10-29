@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Container, Card, Button, Form, Row, Col } from "react-bootstrap";
-import { CreditCard, Edit3, Trash2 } from "lucide-react";
+import { CreditCard, Edit3, Trash2, PlusCircle } from "lucide-react";
 
 export default function PaymentMethods({ user, onUpdate }) {
-  // Fallback in case user.paymentMethods is undefined
-  const initialMethods = user.paymentMethods || [];
+  // Handle undefined payment methods
+  const initialMethods = user?.paymentMethods || [];
 
   const [methods, setMethods] = useState(initialMethods);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -16,7 +16,7 @@ export default function PaymentMethods({ user, onUpdate }) {
   };
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = () => {
@@ -28,44 +28,72 @@ export default function PaymentMethods({ user, onUpdate }) {
   };
 
   const handleRemove = (index) => {
-    const updated = methods.filter((_, i) => i !== index);
-    setMethods(updated);
-    onUpdate && onUpdate({ ...user, paymentMethods: updated });
+    if (window.confirm("Are you sure you want to remove this payment method?")) {
+      const updated = methods.filter((_, i) => i !== index);
+      setMethods(updated);
+      onUpdate && onUpdate({ ...user, paymentMethods: updated });
+    }
   };
 
   const handleAddNew = () => {
     const newMethod = { id: Date.now(), brand: "", last4: "", expiry: "" };
-    setMethods(prev => [...prev, newMethod]);
+    setMethods((prev) => [...prev, newMethod]);
     setEditingIndex(methods.length);
     setFormData(newMethod);
   };
 
   return (
     <Container className="py-4">
-
+      <h3 className="fw-bold mb-3 d-flex align-items-center gap-2">
+        <CreditCard size={22} className="text-primary" />
+        Payment Methods
+      </h3>
 
       {methods.length === 0 && (
-        <p className="text-muted text-center">No payment methods added yet.</p>
+        <p className="text-muted text-center mb-4">
+          No payment methods added yet.
+        </p>
       )}
 
       <Row className="g-3">
         {methods.map((method, index) => (
           <Col xs={12} md={6} key={method.id}>
-            <Card className="shadow-sm rounded-4 p-3">
+            <Card className="shadow-sm rounded-4 p-3 h-100 border-0">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex align-items-center gap-2">
-                  <CreditCard size={24} />
-                  {editingIndex === index ? "Editing Payment" : `${method.brand} ****${method.last4}`}
+                  <CreditCard size={22} className="text-primary" />
+                  <span className="fw-semibold">
+                    {editingIndex === index
+                      ? "Editing Payment"
+                      : `${method.brand || "Card"} ****${method.last4 || "----"}`}
+                  </span>
                 </div>
                 <div>
                   {editingIndex === index ? (
-                    <Button size="sm" variant="success" onClick={handleSave}>Save</Button>
+                    <Button
+                      size="sm"
+                      variant="success"
+                      className="rounded-pill"
+                      onClick={handleSave}
+                    >
+                      Save
+                    </Button>
                   ) : (
                     <>
-                      <Button size="sm" variant="outline-primary" className="me-2" onClick={() => handleEditClick(index)}>
+                      <Button
+                        size="sm"
+                        variant="outline-primary"
+                        className="rounded-pill me-2"
+                        onClick={() => handleEditClick(index)}
+                      >
                         <Edit3 size={16} /> Edit
                       </Button>
-                      <Button size="sm" variant="outline-danger" onClick={() => handleRemove(index)}>
+                      <Button
+                        size="sm"
+                        variant="outline-danger"
+                        className="rounded-pill"
+                        onClick={() => handleRemove(index)}
+                      >
                         <Trash2 size={16} /> Remove
                       </Button>
                     </>
@@ -74,9 +102,9 @@ export default function PaymentMethods({ user, onUpdate }) {
               </div>
 
               {editingIndex === index && (
-                <Form>
+                <Form className="mt-3">
                   <Form.Group className="mb-2">
-                    <Form.Label>Card Brand</Form.Label>
+                    <Form.Label className="fw-semibold">Card Brand</Form.Label>
                     <Form.Control
                       type="text"
                       value={formData.brand}
@@ -84,15 +112,16 @@ export default function PaymentMethods({ user, onUpdate }) {
                     />
                   </Form.Group>
                   <Form.Group className="mb-2">
-                    <Form.Label>Last 4 Digits</Form.Label>
+                    <Form.Label className="fw-semibold">Last 4 Digits</Form.Label>
                     <Form.Control
                       type="text"
+                      maxLength={4}
                       value={formData.last4}
                       onChange={(e) => handleChange("last4", e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-2">
-                    <Form.Label>Expiry</Form.Label>
+                    <Form.Label className="fw-semibold">Expiry</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="MM/YY"
@@ -108,8 +137,38 @@ export default function PaymentMethods({ user, onUpdate }) {
       </Row>
 
       <div className="text-center mt-4">
-        <Button variant="primary" onClick={handleAddNew}>Add New Payment Method</Button>
+        <Button
+          variant="primary"
+          className="rounded-pill d-inline-flex align-items-center gap-2 px-4"
+          onClick={handleAddNew}
+        >
+          <PlusCircle size={18} /> Add New Payment Method
+        </Button>
       </div>
+
+      <style>{`
+        h3 {
+          font-size: 1.3rem;
+        }
+        .form-label {
+          font-weight: 600;
+        }
+        .card {
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+        @media (max-width: 600px) {
+          h3 {
+            font-size: 1.1rem;
+          }
+          .card {
+            padding: 14px;
+          }
+        }
+      `}</style>
     </Container>
   );
 }

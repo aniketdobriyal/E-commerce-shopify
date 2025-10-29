@@ -30,10 +30,7 @@ export default function Wishlist({ wishlistItems = [], removeFromWishlist }) {
 
   return (
     <Container className="">
-      <h2 className="fw-bold mb-4 text-center d-flex justify-content-center align-items-center">
-        <Heart size={28} color="#ef4444" className="me-2" />
-        Your Wishlist
-      </h2>
+     
       <p className="text-center text-muted mb-4">{items.length} items</p>
 
       <Row className="gy-3">

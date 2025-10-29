@@ -5,10 +5,8 @@ export default function DashboardView({ user, onEdit }) {
   return (
     <div className="personal-info-container">
       <div className="info-header">
-        <h4>Personal Information</h4>
-        <button className="edit-btn" onClick={onEdit}>
-          <Edit3 size={16} /> Edit
-        </button>
+       
+    
       </div>
 
       <div className="info-grid">
@@ -45,7 +43,11 @@ export default function DashboardView({ user, onEdit }) {
             </p>
           </div>
         </div>
+        
       </div>
+          <button className="edit-btn my-4 " onClick={onEdit}>
+          <Edit3 size={16} /> Edit
+        </button>
 
       <style>{`
         .personal-info-container {

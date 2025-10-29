@@ -51,16 +51,7 @@ export default function Rewards() {
     alert("🎁 Reward claimed successfully!");
   };
 
-  if (loading) {
-    return (
-      <Container className="text-center">
-            <h2 className="fw-bold  text-center d-flex justify-content-center align-items-center">
-          <Gift size={28} color="#eab308" className="me-2" /> My Rewards
-        </h2>
-        <p>Loading your rewards...</p>
-      </Container>
-    );
-  }
+  
 
   return (
     <div style={{  minHeight: "100vh" }}>

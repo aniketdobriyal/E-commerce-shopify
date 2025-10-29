@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Home, Package, Heart, Tag, CreditCard, LogOut, ArrowLeft, MapPin } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Home,
+  Package,
+  Heart,
+  Tag,
+  CreditCard,
+  LogOut,
+  ArrowLeft,
+  MapPin,
+  Store,
+} from "lucide-react";
 
-// Feature Sections
+import Navbar from "./Navbar";
 import DashboardView from "./DashboardView";
 import Wishlist from "./fetures/Wishlist";
 import Rewards from "./Rewards";
 import Coupons from "./Coupons";
 import OrdersReturns from "./OrdersReturns";
 import PaymentMethods from "./PaymentMethods";
-import Navbar from "./Navbar";
+import SellerAccount from "./SellerAccount";
+import LocationInfo from "./LocationInfo";
 
 const MOCK_USER = {
   name: "Aman Sharma",
@@ -33,28 +44,28 @@ const MOCK_USER = {
 
 export default function ProfileCard() {
   const location = useLocation();
-  const isMobile = window.innerWidth <= 900;
+  const navigate = useNavigate();
 
   const [activeSection, setActiveSection] = useState("dashboard");
-  const [mobileView, setMobileView] = useState(isMobile ? "sidebar" : "main");
+  const [mobileView, setMobileView] = useState(window.innerWidth <= 900 ? "sidebar" : "main");
   const [user, setUser] = useState(MOCK_USER);
 
-  // Sync section with URL (external link support)
+  const isMobile = window.innerWidth <= 900;
+
+  // Handle section from URL
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const sectionFromURL = queryParams.get("section") || "dashboard";
     setActiveSection(sectionFromURL);
 
     if (isMobile) {
-      // Only "My Profile" opens sidebar on mobile
-      if (sectionFromURL === "dashboard") setMobileView("sidebar");
-      else setMobileView("main");
+      setMobileView(sectionFromURL === "dashboard" ? "sidebar" : "main");
     } else {
       setMobileView("main");
     }
-  }, [location.search, isMobile]);
+  }, [location.search]);
 
-  // Window resize
+  // Handle screen resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 900) setMobileView("main");
@@ -63,14 +74,23 @@ export default function ProfileCard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Handle navigation click
   const handleNavClick = (section) => {
     setActiveSection(section);
     if (isMobile) setMobileView("main");
     window.history.replaceState(null, "", `${window.location.pathname}?section=${section}`);
   };
 
+  // Handle mobile back
   const handleMobileBack = () => setMobileView("sidebar");
 
+  // ✅ Logout functionality
+  const handleLogout = () => {
+    localStorage.removeItem("sellerLoggedIn");
+    navigate("/login");
+  };
+
+  // Render section content
   const renderContent = () => {
     switch (activeSection) {
       case "dashboard":
@@ -86,22 +106,17 @@ export default function ProfileCard() {
       case "payments":
         return <PaymentMethods user={user} />;
       case "location":
-        return (
-          <div className="p-4">
-            <h3 className="fw-bold mb-3">Location Info</h3>
-            <p><strong>City:</strong> {user.city}</p>
-            <p><strong>State:</strong> {user.state}</p>
-            <p><strong>Country:</strong> {user.country}</p>
-            <p><strong>Postal Code:</strong> {user.postal}</p>
-          </div>
-        );
+        return <LocationInfo user={user} />;
+      case "seller":
+        return <SellerAccount />;
       default:
         return <DashboardView user={user} handleNavClick={handleNavClick} />;
     }
   };
 
+  // Sidebar nav items
   const mainNavItems = [
-    { key: "dashboard", icon: Home, label: "Personal information" },
+    { key: "dashboard", icon: Home, label: "Personal Information" },
     { key: "orders", icon: Package, label: "Orders & Returns" },
     { key: "wishlist", icon: Heart, label: "Wishlist" },
     { key: "rewards", icon: Tag, label: "Rewards" },
@@ -111,6 +126,7 @@ export default function ProfileCard() {
   const settingsNavItems = [
     { key: "payments", icon: CreditCard, label: "Payment Methods" },
     { key: "location", icon: MapPin, label: "Location" },
+    { key: "seller", icon: Store, label: "Seller Account" },
   ];
 
   return (
@@ -122,7 +138,6 @@ export default function ProfileCard() {
           <>
             {isMobile && mobileView === "sidebar" && <Navbar />}
             <aside className="pc-sidebar">
-              <div className="pc-brand">BrandCo</div>
               <nav>
                 {mainNavItems.map((item) => (
                   <button
@@ -144,7 +159,7 @@ export default function ProfileCard() {
                     <item.icon size={18} /> {item.label}
                   </button>
                 ))}
-                <button className="nav-item logout" onClick={() => alert("Logged out (demo)")}>
+                <button className="nav-item logout" onClick={handleLogout}>
                   <LogOut size={18} /> Logout
                 </button>
               </nav>
@@ -161,33 +176,117 @@ export default function ProfileCard() {
                 </button>
               </div>
             )}
-
             <div className="content-scroll-wrapper my-3">{renderContent()}</div>
           </main>
         )}
-
-        <style>{`
-          .pc-container { display: flex; min-height: 100vh; background: #f5f7fb; }
-          .pc-sidebar { width: 280px; background: #fff; padding: 1.25rem; border-right: 1px solid #eef2f6; height: 100vh; display: flex; flex-direction: column; }
-          .pc-sidebar nav { flex: 1; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
-          .pc-brand { font-weight: 700; font-size: 1.15rem; color: #0f172a; margin-bottom: 0.75rem; }
-          .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; background: transparent; border: none; text-align: left; cursor: pointer; color: #0f172a; font-weight: 600; font-size: 0.95rem; transition: background 150ms, transform 120ms; }
-          .nav-item:hover { background: #f1f5f9; transform: translateY(-1px); }
-          .nav-item.active { background: linear-gradient(90deg,#e6f2ff, #f7fbff); border-left: 4px solid #2563eb; padding-left: 10px; color: #0b5ed7; box-shadow: 0 6px 18px rgba(37,99,235,0.06); }
-          .logout { margin-top: 14px; color: #ef4444; font-weight: 700; }
-          .nav-divider { border-top:1px solid #eef2f6; margin:1.5rem 0; }
-          .pc-main { flex: 1; padding: 28px; overflow-y: auto; height: 100vh; background: #fff; position: relative; }
-          .content-scroll-wrapper { max-width: 1100px; margin: 0 auto; }
-          .mobile-top-navbar { display: flex; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 15; }
-          .mobile-top-navbar .back-btn { display: flex; align-items: center; gap: 6px; font-size: 1.1rem; font-weight: 700; border: none; background: none; color: #2563eb; cursor: pointer; }
-          @media (max-width: 900px) {
-            .pc-container { flex-direction: column; }
-            .pc-sidebar { width: 100%; max-width: 100%; height: 100vh; padding: 16px; border-right: none; }
-            .pc-main { padding: 0; min-height: auto; height: auto; }
-          }
-          html, body { overscroll-behavior-y: contain; overscroll-behavior-x: none; }
-        `}</style>
       </div>
+
+      <style>{`
+        .pc-container {
+          display: flex;
+          min-height: 100vh;
+          background: #f5f7fb;
+          overflow: hidden;
+        }
+        .pc-sidebar {
+          width: 280px;
+          background: #fff;
+          padding: 1.25rem;
+          border-right: 1px solid #eef2f6;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+        .pc-sidebar nav {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          overflow-y: auto;
+        }
+        .nav-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 12px;
+          border-radius: 8px;
+          background: transparent;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          color: #0f172a;
+          font-weight: 600;
+          font-size: 0.95rem;
+          transition: background 150ms, transform 120ms;
+        }
+        .nav-item:hover {
+          background: #f1f5f9;
+          transform: translateY(-1px);
+        }
+        .nav-item.active {
+          background: linear-gradient(90deg, #e6f2ff, #f7fbff);
+          border-left: 4px solid #2563eb;
+          padding-left: 10px;
+          color: #0b5ed7;
+          box-shadow: 0 6px 18px rgba(37, 99, 235, 0.06);
+        }
+        .logout {
+          margin-top: 14px;
+          color: #ef4444;
+          font-weight: 700;
+        }
+        .nav-divider {
+          border-top: 1px solid #eef2f6;
+          margin: 1.5rem 0;
+        }
+        .pc-main {
+          flex: 1;
+          padding: 28px;
+          overflow-y: auto;
+          height: 100vh;
+          background: #fff;
+          position: relative;
+        }
+        .content-scroll-wrapper {
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+        .mobile-top-navbar {
+          display: flex;
+          align-items: center;
+          padding: 12px 16px;
+          background: #fff;
+          border-bottom: 1px solid #e5e7eb;
+          position: sticky;
+          top: 0;
+          z-index: 15;
+        }
+        .mobile-top-navbar .back-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          border: none;
+          background: none;
+          color: #2563eb;
+          cursor: pointer;
+        }
+        @media (max-width: 900px) {
+          .pc-container {
+            flex-direction: column;
+          }
+          .pc-sidebar {
+            width: 100%;
+            height: 100vh;
+            padding: 16px;
+          }
+          .pc-main {
+            padding: 0;
+            min-height: auto;
+          }
+        }
+      `}</style>
     </>
   );
 }

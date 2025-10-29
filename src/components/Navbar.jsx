@@ -13,6 +13,7 @@ import {
   FaGift,
   FaTicketAlt,
   FaMoneyCheckAlt,
+  FaStore,
 } from "react-icons/fa";
 
 export default function NavBar() {
@@ -123,34 +124,118 @@ export default function NavBar() {
         }
       `}</style>
 
-      <Navbar bg="light" expand="lg" className="py-0 shadow-sm navbar-modern position-sticky top-0 w-100" style={{ height: "55px", position: "relative", zIndex: 1030 }}>
-        <Container fluid className="px-md-5 d-flex align-items-center justify-content-between">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-2 my-2 p-1 border-0" />
-          <Navbar.Brand as={Link} to="/" className="fs-3 fw-bold text-gradient-red fst-italic my-2 brand-hover">Shopify</Navbar.Brand>
+      <Navbar
+        bg="light"
+        expand="lg"
+        className="py-0 shadow-sm navbar-modern position-sticky top-0 w-100"
+        style={{ height: "55px", position: "relative", zIndex: 1030 }}
+      >
+        <Container
+          fluid
+          className="px-md-5 d-flex align-items-center justify-content-between"
+        >
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            className="me-2 my-2 p-1 border-0"
+          />
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className="fs-3 fw-bold text-gradient-red fst-italic my-2 brand-hover"
+          >
+            Shopify
+          </Navbar.Brand>
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto fw-bold d-none d-lg-flex">
-              <Nav.Link as={Link} to="/newarrival" className={`text-dark mx-3 nav-hover ${location.pathname === "/newarrival" ? "nav-active" : ""}`}>New Arrivals</Nav.Link>
-              <Nav.Link as={Link} to="/men" className={`text-dark mx-3 nav-hover ${location.pathname === "/men" ? "nav-active" : ""}`}>Men</Nav.Link>
-              <Nav.Link as={Link} to="/women" className={`text-dark mx-3 nav-hover ${location.pathname === "/women" ? "nav-active" : ""}`}>Women</Nav.Link>
-              <Nav.Link as={Link} to="/accessories" className={`text-dark mx-3 nav-hover ${location.pathname === "/accessories" ? "nav-active" : ""}`}>Accessories</Nav.Link>
-              <Nav.Link as={Link} to="/sale" className={`mx-3 nav-hover-sale ${location.pathname === "/sale" ? "nav-active-sale" : ""}`}>Sale</Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/newarrival"
+                className={`text-dark mx-3 nav-hover ${
+                  location.pathname === "/newarrival" ? "nav-active" : ""
+                }`}
+              >
+                New Arrivals
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/men"
+                className={`text-dark mx-3 nav-hover ${
+                  location.pathname === "/men" ? "nav-active" : ""
+                }`}
+              >
+                Men
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/women"
+                className={`text-dark mx-3 nav-hover ${
+                  location.pathname === "/women" ? "nav-active" : ""
+                }`}
+              >
+                Women
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/accessories"
+                className={`text-dark mx-3 nav-hover ${
+                  location.pathname === "/accessories" ? "nav-active" : ""
+                }`}
+              >
+                Accessories
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/sale"
+                className={`mx-3 nav-hover-sale ${
+                  location.pathname === "/sale" ? "nav-active-sale" : ""
+                }`}
+              >
+                Sale
+              </Nav.Link>
             </Nav>
 
             {/* MOBILE MENU */}
             <div className="d-lg-none w-100">
               <div className="border rounded shadow-sm bg-white p-2">
-                <div className="d-flex justify-content-between align-items-center py-2 px-2 border-bottom" onClick={() => setShowCategories(!showCategories)} style={{ cursor: "pointer" }}>
-                  <span className="fw-semibold text-success"><FaBoxOpen className="me-2" /> Categories</span>
-                  {showCategories ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
+                <div
+                  className="d-flex justify-content-between align-items-center py-2 px-2 border-bottom"
+                  onClick={() => setShowCategories(!showCategories)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span className="fw-semibold text-success">
+                    <FaBoxOpen className="me-2" /> Categories
+                  </span>
+                  {showCategories ? (
+                    <FaChevronUp size={16} />
+                  ) : (
+                    <FaChevronDown size={16} />
+                  )}
                 </div>
 
-                <div className="overflow-hidden" style={{ maxHeight: showCategories ? "300px" : "0", opacity: showCategories ? 1 : 0, transition: "max-height 0.4s ease, opacity 0.4s ease" }}>
-                  <Nav.Link as={Link} to="/newarrival" className="d-flex align-items-center py-3 ps-3 text-dark"><FaBoxOpen className="me-2" /> New Arrivals</Nav.Link>
-                  <Nav.Link as={Link} to="/men" className="d-flex align-items-center py-3 ps-3 text-dark"><FaBoxOpen className="me-2" /> Men</Nav.Link>
-                  <Nav.Link as={Link} to="/women" className="d-flex align-items-center py-3 ps-3 text-dark"><FaBoxOpen className="me-2" /> Women</Nav.Link>
-                  <Nav.Link as={Link} to="/accessories" className="d-flex align-items-center py-3 ps-3 text-dark"><FaBoxOpen className="me-2" /> Accessories</Nav.Link>
-                  <Nav.Link as={Link} to="/sale" className="d-flex align-items-center py-3 ps-3 text-danger"><FaBoxOpen className="me-2" /> Sale</Nav.Link>
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    maxHeight: showCategories ? "340px" : "0",
+                    opacity: showCategories ? 1 : 0,
+                    transition: "max-height 0.4s ease, opacity 0.4s ease",
+                  }}
+                >
+                  <Nav.Link as={Link} to="/newarrival" className="d-flex align-items-center py-3 ps-3 text-dark">
+                    <FaBoxOpen className="me-2" /> New Arrivals
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/men" className="d-flex align-items-center py-3 ps-3 text-dark">
+                    <FaBoxOpen className="me-2" /> Men
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/women" className="d-flex align-items-center py-3 ps-3 text-dark">
+                    <FaBoxOpen className="me-2" /> Women
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/accessories" className="d-flex align-items-center py-3 ps-3 text-dark">
+                    <FaBoxOpen className="me-2" /> Accessories
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/sale" className="d-flex align-items-center py-3 ps-3 text-danger">
+                    <FaBoxOpen className="me-2" /> Sale
+                  </Nav.Link>
 
                   {/* Profile Mobile Links */}
                   <Nav.Link onClick={() => openProfileSection("dashboard")} className="d-flex align-items-center py-3 text-dark"><FaUser className="me-2" /> My Profile</Nav.Link>
@@ -159,6 +244,7 @@ export default function NavBar() {
                   <Nav.Link onClick={() => openProfileSection("rewards")} className="d-flex align-items-center py-3 text-dark"><FaGift className="me-2" /> Rewards</Nav.Link>
                   <Nav.Link onClick={() => openProfileSection("coupons")} className="d-flex align-items-center py-3 text-dark"><FaTicketAlt className="me-2" /> Coupons</Nav.Link>
                   <Nav.Link onClick={() => openProfileSection("payments")} className="d-flex align-items-center py-3 text-dark"><FaMoneyCheckAlt className="me-2" /> Payment Methods</Nav.Link>
+                  <Nav.Link onClick={() => openProfileSection("seller")} className="d-flex align-items-center py-3 text-dark"><FaStore className="me-2" /> Seller Account</Nav.Link>
                 </div>
               </div>
             </div>
@@ -166,10 +252,21 @@ export default function NavBar() {
         </Container>
 
         {/* Right icons */}
-        <div className="d-flex align-items-center flex-nowrap position-absolute" style={{ top: 0, right: 0, height: "55px", padding: "0 1rem", zIndex: 1200 }}>
+        <div
+          className="d-flex align-items-center flex-nowrap position-absolute"
+          style={{ top: 0, right: 0, height: "55px", padding: "0 1rem", zIndex: 1200 }}
+        >
           <div className="search-wrapper" ref={searchRef}>
-            <input type="text" className="search-input" placeholder="Search..." autoFocus={showSearch} />
-            <button className="btn p-2 border-0 icon-hover" onClick={() => setShowSearch(prev => !prev)}>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search..."
+              autoFocus={showSearch}
+            />
+            <button
+              className="btn p-2 border-0 icon-hover"
+              onClick={() => setShowSearch((prev) => !prev)}
+            >
               <FaSearch size={22} className="text-dark" />
             </button>
           </div>
@@ -179,7 +276,7 @@ export default function NavBar() {
             <Dropdown>
               <Dropdown.Toggle as={UserIconToggle} id="user-dropdown" />
               <Dropdown.Menu className="dropdown-menu-custom" align="end">
-                <Dropdown.Item as={Link} to="/login" className="signin">
+                <Dropdown.Item as={Link} to="/login" >
                   <FaUserCircle className="me-2" /> Sign In
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => openProfileSection("wishlist")}>
@@ -197,9 +294,12 @@ export default function NavBar() {
                 <Dropdown.Item onClick={() => openProfileSection("coupons")}>
                   <FaTicketAlt className="me-2" /> Coupons
                 </Dropdown.Item>
-                <Dropdown.Divider />
                 <Dropdown.Item onClick={() => openProfileSection("payments")}>
                   <FaMoneyCheckAlt className="me-2" /> Payment Methods
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item className ="signin bg-danger" onClick={() => openProfileSection("seller")}>
+                  <FaStore className="me-2 " /> Seller Account
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
