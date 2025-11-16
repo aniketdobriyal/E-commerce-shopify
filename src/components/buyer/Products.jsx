@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { useProductContext } from "../../context/ProductContext";
+import { Link } from "react-router-dom";
 import Spinner from './Spinner';
 
 function Products() {
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { products, loadingProducts: loading } = useProductContext();
 
   // ⭐ Star Rating Component
   function StarRating({ rating }) {
@@ -27,25 +27,8 @@ function Products() {
     );
   }
 
-  // 📦 Fetch all products
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await fetch('https://fakestoreapi.com/products'); // fetch all products
-        const parsedData = await data.json();
-        setCards(parsedData);
-      } catch (error) {
-        console.error("Failed to fetch product data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
-
   return (
     <>
-      {/* Embedded CSS for hover + layout consistency */}
       <style>{`
         .product-card {
           transition: all 0.3s ease;
@@ -93,42 +76,31 @@ function Products() {
           <div className="text-center py-5"><Spinner /></div>
         ) : (
           <Row className="g-3 g-md-4">
-            {cards.map((card) => (
+            {products.map((card) => (
               <Col xs={6} md={4} lg={3} key={card.id}>
-                {/* Entire card clickable */}
                 <Card
-
                   as={Link}
                   to={`/product/${card.id}`}
                   className="border-0 shadow-sm h-100 text-decoration-none text-dark product-card"
                 >
-                  {/* Image Section */}
                   <div
                     className="p-3 d-flex align-items-center justify-content-center"
-                    style={{
-                      height: '200px',
-                      backgroundColor: '#f9f9f9',
-                    }}
+                    style={{ height: '200px', backgroundColor: '#f9f9f9' }}
                   >
                     <Card.Img
                       variant="top"
                       src={card.image}
                       alt={card.title}
-                      style={{
-                        maxHeight: '100%',
-                        maxWidth: '100%',
-                        objectFit: 'contain'
-                      }}
+                      style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                     />
                   </div>
 
-                  {/* Content Section */}
                   <Card.Body className="d-flex flex-column bg-white">
                     <Card.Title className="text-dark text-truncate mb-1">
                       {card.title}
                     </Card.Title>
 
-                    <StarRating rating={card.rating.rate} />
+                    <StarRating rating={card.rating?.rate || 0} />
 
                     <h4 className="fw-bolder text-dark mt-auto mb-1">
                       ${card.price.toFixed(2)}

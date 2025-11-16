@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Container, Card, Button, Form, Row, Col } from "react-bootstrap";
 import { CreditCard, Edit3, Trash2, PlusCircle } from "lucide-react";
 
-export default function PaymentMethods({ user, onUpdate }) {
-  // Handle undefined payment methods
+export default function PaymentMethods({ user, onUpdate, onSelectPaymentMethod }) {
   const initialMethods = user?.paymentMethods || [];
 
   const [methods, setMethods] = useState(initialMethods);
@@ -91,10 +90,18 @@ export default function PaymentMethods({ user, onUpdate }) {
                       <Button
                         size="sm"
                         variant="outline-danger"
-                        className="rounded-pill"
+                        className="rounded-pill me-2"
                         onClick={() => handleRemove(index)}
                       >
                         <Trash2 size={16} /> Remove
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="success"
+                        className="rounded-pill"
+                        onClick={() => onSelectPaymentMethod(method)}
+                      >
+                        Use This Card
                       </Button>
                     </>
                   )}
@@ -145,30 +152,6 @@ export default function PaymentMethods({ user, onUpdate }) {
           <PlusCircle size={18} /> Add New Payment Method
         </Button>
       </div>
-
-      <style>{`
-        h3 {
-          font-size: 1.3rem;
-        }
-        .form-label {
-          font-weight: 600;
-        }
-        .card {
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        }
-        @media (max-width: 600px) {
-          h3 {
-            font-size: 1.1rem;
-          }
-          .card {
-            padding: 14px;
-          }
-        }
-      `}</style>
     </Container>
   );
 }

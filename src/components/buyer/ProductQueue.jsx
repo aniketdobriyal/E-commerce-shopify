@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaStar, FaStarHalfAlt, FaRegStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useProductContext } from "../../context/ProductContext";
+import Spinner from "./Spinner";
 
 function ProductQueue({ title = "Trending Products" }) {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { products, loadingProducts: loading } = useProductContext();
   const containerRef = useRef(null);
 
-  // ⭐ Star Rating
   const StarRating = ({ rating }) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
@@ -27,103 +27,78 @@ function ProductQueue({ title = "Trending Products" }) {
     );
   };
 
-  // 📦 Fetch Products
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products?limit=10");
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadProducts();
-  }, []);
-
-  // 🡸 Scroll Left
   const scrollLeft = () => {
     containerRef.current.scrollBy({ left: -220, behavior: "smooth" });
   };
 
-  // 🡺 Scroll Right
   const scrollRight = () => {
     containerRef.current.scrollBy({ left: 220, behavior: "smooth" });
   };
-
-  // 🔹 Dragging support for desktop and touch
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let isDown = false;
-    let startX;
-    let scrollLeftStart;
-
-    const startDrag = (x) => {
-      isDown = true;
-      startX = x - container.offsetLeft;
-      scrollLeftStart = container.scrollLeft;
-    };
-
-    const moveDrag = (x) => {
-      if (!isDown) return;
-      const walk = startX - x;
-      container.scrollLeft = scrollLeftStart + walk;
-    };
-
-    const stopDrag = () => {
-      isDown = false;
-    };
-
-    // Mouse events
-    container.addEventListener("mousedown", (e) => startDrag(e.pageX));
-    container.addEventListener("mousemove", (e) => moveDrag(e.pageX));
-    container.addEventListener("mouseleave", stopDrag);
-    container.addEventListener("mouseup", stopDrag);
-
-    // Touch events
-    container.addEventListener("touchstart", (e) => startDrag(e.touches[0].clientX), { passive: true });
-    container.addEventListener("touchmove", (e) => moveDrag(e.touches[0].clientX), { passive: false });
-    container.addEventListener("touchend", stopDrag);
-    container.addEventListener("touchcancel", stopDrag);
-
-    return () => {
-      container.removeEventListener("mousedown", (e) => startDrag(e.pageX));
-      container.removeEventListener("mousemove", (e) => moveDrag(e.pageX));
-      container.removeEventListener("mouseleave", stopDrag);
-      container.removeEventListener("mouseup", stopDrag);
-
-      container.removeEventListener("touchstart", (e) => startDrag(e.touches[0].clientX));
-      container.removeEventListener("touchmove", (e) => moveDrag(e.touches[0].clientX));
-      container.removeEventListener("touchend", stopDrag);
-      container.removeEventListener("touchcancel", stopDrag);
-    };
-  }, []);
 
   return (
     <div className="product-queue-section">
       <h4 className="product-queue-title">{title}</h4>
 
       {loading ? (
-        <p className="text-muted">Loading products...</p>
+        // ✅ EXACT SAME STYLE AS ACCESSORIES LOADING
+        <div className="product-queue-container d-flex" ref={containerRef}>
+          {[...Array(10)].map((_, i) => (
+            <Card key={i} className="product-card-horizontal" style={{ width: "200px", borderRadius: "14px" }}>
+              <div
+                style={{
+                  height: "180px",
+                  backgroundColor: "#f1f1f1",
+                  borderTopLeftRadius: "14px",
+                  borderTopRightRadius: "14px",
+                }}
+              ></div>
+
+              <Card.Body>
+                <div
+                  style={{
+                    width: "80%",
+                    height: "12px",
+                    backgroundColor: "#e0e0e0",
+                    borderRadius: "5px",
+                    marginBottom: "8px",
+                  }}
+                ></div>
+
+                <div
+                  style={{
+                    width: "60%",
+                    height: "12px",
+                    backgroundColor: "#e0e0e0",
+                    borderRadius: "5px",
+                    marginBottom: "8px",
+                  }}
+                ></div>
+
+                <div
+                  style={{
+                    width: "40%",
+                    height: "14px",
+                    backgroundColor: "#d6d6d6",
+                    borderRadius: "5px",
+                    marginTop: "10px",
+                  }}
+                ></div>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       ) : (
         <>
-          {/* Left Arrow */}
           <Button className="arrow-button arrow-left" onClick={scrollLeft}>
             <FaChevronLeft />
           </Button>
 
-          {/* Right Arrow */}
           <Button className="arrow-button arrow-right" onClick={scrollRight}>
             <FaChevronRight />
           </Button>
 
-          {/* Product Queue */}
           <div className="product-queue-container" ref={containerRef}>
-            {products.map((product) => (
+            {products.slice(0, 10).map((product) => (
               <Card
                 as={Link}
                 to={`/product/${product.id}`}
@@ -133,7 +108,7 @@ function ProductQueue({ title = "Trending Products" }) {
                 <Card.Img variant="top" src={product.image} alt={product.title} />
                 <Card.Body>
                   <Card.Title>{product.title}</Card.Title>
-                  <StarRating rating={product.rating.rate} />
+                  <StarRating rating={product.rating?.rate || 0} />
                   <h5>${product.price.toFixed(2)}</h5>
                 </Card.Body>
               </Card>
@@ -142,6 +117,7 @@ function ProductQueue({ title = "Trending Products" }) {
         </>
       )}
 
+      {/* ⛔ NO CHANGES BELOW */}
       <style>{`
         .product-queue-section {
           position: relative;
@@ -217,7 +193,7 @@ function ProductQueue({ title = "Trending Products" }) {
 
         .product-card-horizontal h5 {
           font-size: 1.05rem;
-          color: #0d6efd;
+        
           font-weight: 700;
           margin-top: 0.3rem;
         }

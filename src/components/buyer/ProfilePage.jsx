@@ -2,10 +2,10 @@ import PersonalInfo from "./PersonalInfo";
 
 export default function ProfilePage() {
   const user = {
-    name: "Aniket Dobriyal",
+    name: "Aniket obriyal",
     gender: "Male",
     email: "aniket@example.com",
-    phone: "+91 9058894944",
+    phone: "+91 905894944",
     address: "123 Street, Dehradun, India",
   };
 

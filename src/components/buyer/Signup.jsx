@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "./Navbar";
-import StaticNavbar from "./StaticNavbar";
+
 import { Col, Form, Button, Row, Container } from "react-bootstrap";
 
 export default function Signup() {
   return (
     <div>
       <Navbar />
-      <StaticNavbar />
+    
 
       <Container
         fluid

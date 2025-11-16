@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Image } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Image, Placeholder, Spinner } from "react-bootstrap";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
@@ -33,33 +33,65 @@ export default function Cart({ cartItems = [], removeFromCart }) {
     0
   );
 
+  // === SKELETON LOADING ===
   if (loading) {
     return (
-      <div>
+      <>
         <Navbar />
-        <Container className="py-5 text-center">
-          <h4>Loading products...</h4>
+        <Container className="py-5">
+          <h4 className="mb-4 text-center">Loading products...</h4>
+          <Row className="gy-3">
+            {[...Array(5)].map((_, idx) => (
+              <Col key={idx} xs={12}>
+                <Card className="shadow-sm border-0 rounded-4 d-flex flex-row align-items-center" style={{ minHeight: "120px", overflow: "hidden", backgroundColor: "#fff" }}>
+                  <div style={{
+                    width: "110px",
+                    height: "110px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#f0f0f0",
+                    flexShrink: 0,
+                    borderTopLeftRadius: "14px",
+                    borderBottomLeftRadius: "14px",
+                  }}>
+                    <Placeholder as="div" animation="glow" className="w-100 h-100" />
+                  </div>
+                  <Card.Body className="d-flex flex-row justify-content-between align-items-center w-100 py-2 px-3">
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <Placeholder as="h6" animation="glow">
+                        <Placeholder xs={8} />
+                      </Placeholder>
+                      <Placeholder as="p" animation="glow" className="text-success fw-bold">
+                        <Placeholder xs={4} />
+                      </Placeholder>
+                      <Placeholder as="p" animation="glow">
+                        <Placeholder xs={2} />
+                      </Placeholder>
+                    </div>
+                    <Placeholder.Button variant="danger" xs={3} className="rounded-5" />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </Container>
-      </div>
+      </>
     );
   }
 
+  // === MAIN CART UI ===
   return (
     <div style={{ backgroundColor: "#f7f8fa", minHeight: "100vh" }}>
       <Navbar />
 
       <Container className="py-5">
-
         <Row className="gy-3">
           {itemsToDisplay.map((item) => (
             <Col key={item.id} xs={12}>
               <Card
                 className="shadow-sm border-0 rounded-4 d-flex flex-row align-items-center"
-                style={{
-                  minHeight: "120px",
-                  overflow: "hidden",
-                  backgroundColor: "#fff",
-                }}
+                style={{ minHeight: "120px", overflow: "hidden", backgroundColor: "#fff" }}
               >
                 {/* Image section */}
                 <div
@@ -79,48 +111,27 @@ export default function Cart({ cartItems = [], removeFromCart }) {
                     src={item.image}
                     alt={item.title}
                     fluid
-                    style={{
-                      maxHeight: "90px",
-                      width: "auto",
-                      objectFit: "contain",
-                    }}
+                    style={{ maxHeight: "90px", width: "auto", objectFit: "contain" }}
                   />
                 </div>
 
                 {/* Content */}
-                <Card.Body
-                  className="d-flex flex-row justify-content-between align-items-center w-100 py-2 px-3"
-                  style={{ overflow: "hidden" }}
-                >
+                <Card.Body className="d-flex flex-row justify-content-between align-items-center w-100 py-2 px-3" style={{ overflow: "hidden" }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <h6
-                      className="fw-semibold mb-1 text-truncate"
-                      style={{
-                        maxWidth: "80%",
-                        fontSize: "1rem",
-                      }}
-                    >
+                    <h6 className="fw-semibold mb-1 text-truncate" style={{ maxWidth: "80%", fontSize: "1rem" }}>
                       {item.title}
                     </h6>
-                    <p
-                      className="text-success fw-bold mb-1"
-                      style={{ fontSize: "1.1rem" }}
-                    >
+                    <p className="text-success fw-bold mb-1" style={{ fontSize: "1.1rem" }}>
                       ${item.price.toFixed(2)}
                     </p>
-                    <p className="text-muted mb-0 small">
-                      Qty: {item.quantity || 1}
-                    </p>
+                    <p className="text-muted mb-0 small">Qty: {item.quantity || 1}</p>
                   </div>
-
                   <div>
                     <Button
                       variant="outline-danger"
                       size="sm"
                       className="rounded-5 px-3 py-1"
-                      onClick={() =>
-                        removeFromCart && removeFromCart(item.id)
-                      }
+                      onClick={() => removeFromCart && removeFromCart(item.id)}
                     >
                       Remove
                     </Button>
@@ -134,10 +145,7 @@ export default function Cart({ cartItems = [], removeFromCart }) {
         {/* Total Section */}
         <div className="mt-4 text-end pe-2">
           <h5 className="fw-bold mb-2">Total: ${totalPrice.toFixed(2)}</h5>
-          <Button
-            variant="dark"
-            className="mt-2 rounded-4 px-4 py-2 fw-semibold"
-          >
+          <Button variant="dark" className="mt-2 rounded-4 px-4 py-2 fw-semibold">
             Proceed to Checkout
           </Button>
         </div>
