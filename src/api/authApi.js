@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth"; // backend URL
+//    const API_URL = "http://localhost:5000/api/auth"; // backend URL 
+const API_URL = "https://e-commerce-shopify-backend.onrender.com/api/auth"; // backend URL 
 
 // Login
 export const loginUser = async (email, password) => {

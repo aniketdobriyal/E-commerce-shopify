@@ -1,6 +1,6 @@
 export const createOrder = async ({ productId, quantity, amount, userId }) => {
   try {
-    const res = await fetch("http://localhost:5000/api/order/create", {
+    const res = await fetch("https://e-commerce-shopify-backend.onrender.com/api/order/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId, quantity, amount, userId }),

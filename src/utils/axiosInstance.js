@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",   // your backend URL
+  baseURL: "https://e-commerce-shopify-backend.onrender.com/api",   // your backend URL
 });
 
 // Attach token automatically

@@ -1,8 +1,8 @@
 // src/api/locationApi.js
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/location";
-
+//const BASE_URL = "http://localhost:5000/api/location";
+  const BASE_URL = "https://e-commerce-shopify-backend.onrender.com/api/location";                                            
 // Fetch all locations for a user
 export const fetchLocations = async (userId) => {
   try {
