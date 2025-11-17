@@ -84,7 +84,7 @@ export default function NavBar() {
         .dropdown-divider { border-top: 1px solid #ddd; margin: 0.3rem 0; }
         .dropdown-toggle::after { display: none; }
         .search-input { width: ${showSearch ? "180px" : "0"}; opacity: ${showSearch ? "1" : "0"}; padding: ${showSearch ? "0 0.5rem" : "0"}; border: 1px solid #ced4da; border-radius: 20px; transition: all 0.3s ease; height: 32px; font-size: 0.9rem; margin-right: 0.5rem; }
-        .text-gradient-red { background: linear-gradient(90deg, #35006aff, #ff9e9eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+        .text-gradient-red { background: linear-gradient(90deg, #91628aff, #f69b9bff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
         .search-wrapper { display: flex; align-items: center; transition: width 0.3s ease; }
       
       @media (max-width: 991px) {

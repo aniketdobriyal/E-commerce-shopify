@@ -1,13 +1,6 @@
+// src/components/buyer/Accessories.jsx
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Placeholder,
-  Badge,
-} from "react-bootstrap";
+import { Container, Row, Col, Card, Badge, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -17,10 +10,10 @@ import { useProductContext } from "../../context/ProductContext";
 export default function Accessories() {
   const { products, loadingProducts: loading } = useProductContext();
 
-  // Filter accessories = jewelery category
-  const accessories = products.filter((item) => item.category === "jewelery");
+  const accessories = products?.filter(
+    (item) => (item.category || "").toLowerCase() === "jewelery"
+  ) ?? [];
 
-  // ⭐ Star rating component
   const StarRating = ({ rating = 0 }) => {
     const full = Math.floor(rating);
     const half = rating % 1 >= 0.5;
@@ -31,7 +24,7 @@ export default function Accessories() {
         {[...Array(full)].map((_, i) => (
           <FaStar key={`f-${i}`} size={14} className="text-warning" />
         ))}
-        {half && <FaStarHalfAlt size={14} className="text-warning" />}
+        {half && <FaStarHalfAlt key="half" size={14} className="text-warning" />}
         {[...Array(empty)].map((_, i) => (
           <FaRegStar key={`e-${i}`} size={14} className="text-muted" />
         ))}
@@ -42,15 +35,14 @@ export default function Accessories() {
   return (
     <>
       <Navbar />
-      <Container className="py-4">
+      <Container className="py-4 my-5" style={{background:"#F8F9FA"}}>
         <h2 className="fw-bold fs-4 mb-4" style={{ color: "#494949" }}>
-          Accessories
+          
         </h2>
 
         <Row className="g-3">
           {loading
-            ? // ⭐ Skeleton Loading — identical to Men.jsx
-              [...Array(8)].map((_, idx) => (
+            ? [...Array(8)].map((_, idx) => (
                 <Col key={idx} xs={6} sm={6} md={4} lg={3}>
                   <Card className="shadow-sm border-0 rounded-4 w-100 h-100 position-relative">
                     <Badge
@@ -75,10 +67,7 @@ export default function Accessories() {
                       }}
                     >
                       <Placeholder animation="glow" className="w-100 h-100">
-                        <Placeholder
-                          xs={12}
-                          style={{ height: "150px", borderRadius: "8px" }}
-                        />
+                        <Placeholder xs={12} style={{ height: "150px", borderRadius: "8px" }} />
                       </Placeholder>
                     </div>
 
@@ -91,7 +80,7 @@ export default function Accessories() {
 
                       <div className="d-flex justify-content-center mb-1">
                         {[...Array(5)].map((_, i) => (
-                          <Placeholder key={i} animation="glow">
+                          <Placeholder key={i} animation="glow" className="mx-1">
                             <Placeholder xs={1} />
                           </Placeholder>
                         ))}
@@ -102,42 +91,32 @@ export default function Accessories() {
                           <Placeholder xs={4} />
                         </Placeholder>
                       </Card.Text>
-
-                      <Button
-                        variant="dark"
-                        size="sm"
-                        className="rounded-4 mt-auto"
-                        disabled
-                      >
-                        View Item
-                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
               ))
-            : // ⭐ Actual Products — identical styling like Men.jsx
-              accessories.map((item) => (
-                <Col
-                  key={item.id}
-                  xs={6}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                  className="d-flex align-items-stretch"
-                >
+            : accessories.length > 0
+            ? accessories.map((item) => (
+                <Col xs={6} sm={6} md={4} lg={3} key={item.id} className="d-flex align-items-stretch m-0 p-0">
                   <Card
                     as={Link}
                     to={`/product/${item.id}`}
-                    className="shadow-sm border-0 rounded-4 w-100 h-100 position-relative text-decoration-none text-dark"
-                    style={{ transition: "0.3s", cursor: "pointer" }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "translateY(-5px)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "translateY(0)")
-                    }
+                    className="border-0  w-100 h-100 position-relative text-decoration-none text-dark"
+                    style={{ transition: "all 0.3s ease", cursor: "pointer", zIndex: 1 ,background:"#F8F9FA" }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-5px) scale(1.02)";
+                      e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
+                      e.currentTarget.style.zIndex = "5";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0) scale(1)";
+                      e.currentTarget.style.boxShadow = "none";
+                      e.currentTarget.style.zIndex = "1";
+                    }}
                   >
-                    
+                    <Badge bg="danger" className="position-absolute" style={{ top: "10px", left: "10px", zIndex: 10 }}>
+                      Accessories
+                    </Badge>
 
                     <div
                       style={{
@@ -155,36 +134,42 @@ export default function Accessories() {
                       <Card.Img
                         src={item.image}
                         alt={item.title}
-                        style={{
-                          maxHeight: "150px",
-                          maxWidth: "100%",
-                          objectFit: "contain",
-                        }}
+                        style={{ maxHeight: "150px", maxWidth: "100%", objectFit: "contain" }}
                       />
                     </div>
 
-                    <Card.Body className="text-center d-flex flex-column justify-content-between">
-                      <Card.Title
-                        className="fs-6 fw-bold text-truncate mb-1"
-                        title={item.title}
-                        style={{ minHeight: "38px" }}
-                      >
+                    <Card.Body className="text-center d-flex flex-column">
+                      <Card.Title className="fs-6 fw-bold text-truncate mb-1" title={item.title}>
                         {item.title}
                       </Card.Title>
 
-                      <StarRating rating={item.rating?.rate ?? 0} />
-
-                      <Card.Text className=" fw-bold fs-5 mb-2">
-                        ${item.price.toFixed(2)}
+                      {/* Multi-line description */}
+                      <Card.Text
+                        className="text-muted mb-2"
+                        style={{
+                          fontSize: "0.85rem",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                        title={item.description}
+                      >
+                        {item.description || "No description available."}
                       </Card.Text>
 
-                      <Button variant="dark" size="sm" className="rounded-4 mt-auto">
-                        View Item
-                      </Button>
+                      <StarRating rating={item.rating?.rate ?? 0} />
+
+                      <Card.Text className="fw-bold fs-5 mt-auto">
+                        ${item.price?.toFixed(2) ?? item.price}
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-              ))}
+              ))
+            : <Col xs={12}><p className="text-center">No Accessories found.</p></Col>
+          }
         </Row>
       </Container>
       <Footer />

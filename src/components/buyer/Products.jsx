@@ -77,14 +77,17 @@ function Products() {
         ) : (
           <Row className="g-3 g-md-4">
             {products.map((card) => (
-              <Col xs={6} md={4} lg={3} key={card.id}>
+              <Col xs={6} md={4} lg={3} key={card.id} className='m-0 p-0' style={{background:"#F8F9FA"}}>
                 <Card
                   as={Link}
                   to={`/product/${card.id}`}
-                  className="border-0 shadow-sm h-100 text-decoration-none text-dark product-card"
+                  
+                  className="border-0   h-100 text-decoration-none text-dark product-card"
+                 
                 >
                   <div
-                    className="p-3 d-flex align-items-center justify-content-center"
+                  
+                    className="p-3 d-flex align-items-center  justify-content-center"
                     style={{ height: '200px', backgroundColor: '#f9f9f9' }}
                   >
                     <Card.Img
@@ -94,8 +97,8 @@ function Products() {
                       style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                     />
                   </div>
-
-                  <Card.Body className="d-flex flex-column bg-white">
+ 
+                  <Card.Body className="d-flex flex-column "  style={{background:"#F8F9FA"}}>
                     <Card.Title className="text-dark text-truncate mb-1">
                       {card.title}
                     </Card.Title>
