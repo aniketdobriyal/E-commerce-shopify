@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "./buyer/Navbar";
+import Footer from "./buyer/Footer";
 import { Form, Button, Row, Container, Col } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
