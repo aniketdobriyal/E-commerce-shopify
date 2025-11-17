@@ -86,13 +86,15 @@ export default function NavBar() {
         .search-input { width: ${showSearch ? "180px" : "0"}; opacity: ${showSearch ? "1" : "0"}; padding: ${showSearch ? "0 0.5rem" : "0"}; border: 1px solid #ced4da; border-radius: 20px; transition: all 0.3s ease; height: 32px; font-size: 0.9rem; margin-right: 0.5rem; }
         .text-gradient-red { background: linear-gradient(90deg, #35006aff, #ff9e9eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
         .search-wrapper { display: flex; align-items: center; transition: width 0.3s ease; }
-        @media (max-width: 991px) {
-          .navbar-brand { position:absolute; left: 40% !important; top:0%; }
+      
+      @media (max-width: 991px) {
+          .navbar-brand { position:absolute; left: 40% !important; top:0%; display:none }
           .navbar-collapse { border-radius: 0 0 8px 8px; position:relative; top:1px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
           .navbar-collapse .nav-link { transition: background-color 0.3s ease, color 0.3s ease; border-radius: 4px; }
           .navbar-collapse .nav-link:hover { background-color: #e6f4ea; color: #198754 !important; }
         }
-      `}</style>
+      `}
+      </style>
 
       <Navbar
         bg="light"
@@ -103,7 +105,7 @@ export default function NavBar() {
         <Container fluid className="px-md-5 d-flex align-items-center justify-content-between">
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-2 my-2 p-1 border-0" />
           <Navbar.Brand as={Link} to="/" className="fs-3 fw-bold text-gradient-red fst-italic my-2 brand-hover">
-            Naina Bazar
+            Nayyina Bazar
           </Navbar.Brand>
 
           <Navbar.Collapse id="basic-navbar-nav">
