@@ -105,7 +105,7 @@ export default function NavBar() {
         <Container fluid className="px-md-5 d-flex align-items-center justify-content-between">
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-2 my-2 p-1 border-0" />
           <Navbar.Brand as={Link} to="/" className="fs-3 fw-bold text-gradient-red fst-italic my-2 brand-hover">
-            Nayyina Bazar
+            Naina Bazar
           </Navbar.Brand>
 
           <Navbar.Collapse id="basic-navbar-nav">
