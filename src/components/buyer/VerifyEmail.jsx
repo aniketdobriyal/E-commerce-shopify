@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import Navbar from "./buyer/Navbar";
-import Footer from "./buyer/Footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { Form, Button, Row, Container, Col } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -44,7 +44,7 @@ export default function VerifyEmail() {
 
     try {
       const verificationCode = code.join("");
-      const res = await axios.post("http://localhost:5000/api/auth/verify", {
+      const res = await axios.post("https://e-commerce-shopify-theta.vercel.app/api/auth/verify", {
         email,
         code: verificationCode,
       });

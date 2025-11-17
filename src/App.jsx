@@ -13,7 +13,7 @@ import Dashboard from './components/buyer/Dashboard';
 import Login from './components/buyer/Login';
 import Signup from './components/buyer/Signup';
 import Register from "./components/buyer/Register";
-import VerifyEmail from "./components/VerifyEmail";
+import VerifyEmail from "./components/buyer/VerifyEmail";
 import ProfileCard from './components/buyer/ProfileCard';
 import Product from './components/buyer/Product';
 import Men from './components/buyer/Men';
