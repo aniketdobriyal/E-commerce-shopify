@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import { Form, Button, Row, Container, Col, Spinner } from "react-bootstrap";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import Footer from "./Footer";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -12,15 +12,14 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 👈 added
   const [error, setError] = useState("");
 
   const { login, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get redirect info from state
   const from = location.state?.from || "/dashboard";
-  const section = location.state?.section || null;
   const buyNowData = location.state?.buyNowData || null;
 
   useEffect(() => {
@@ -36,14 +35,12 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    // Attempt login
     const res = await login(email, password);
     if (!res.success) {
       setError(res.message || "Login failed");
       return;
     }
 
-    // After login, redirect to proper page
     navigate(from, {
       replace: true,
       state: buyNowData ? { buyNowData } : undefined,
@@ -65,6 +62,7 @@ export default function Login() {
             </h3>
 
             <Form onSubmit={handleLogin}>
+              {/* EMAIL */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaUser />
@@ -84,18 +82,35 @@ export default function Login() {
                 />
               </Form.Group>
 
+              {/* PASSWORD WITH EYE ICON */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaLock />
                 </span>
+
                 <Form.Control
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ paddingLeft: "40px", height: "45px" }}
                   required
                 />
+
+                {/* Eye icon */}
+                <span
+                  className="position-absolute"
+                  style={{
+                    right: "15px",
+                    top: "12px",
+                    cursor: "pointer",
+                    color: "#777",
+                    userSelect: "none",
+                  }}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </Form.Group>
 
               {error && <div className="text-danger mb-3">{error}</div>}

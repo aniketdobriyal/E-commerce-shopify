@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Form, Button, Row, Container, Col } from "react-bootstrap";
-import { FaUser, FaLock, FaPhone } from "react-icons/fa";
+import { FaUser, FaLock, FaPhone, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 👈 added
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -29,19 +30,20 @@ export default function Register() {
     }
   }, []);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setMessage("");
-  const result = await register(name, email, password, phone);
-  if (result.success) {
-    setMessage("Registered successfully! Check your email for the verification code.");
-    // Redirect to verify page with email
-    navigate("/verify", { state: { email } });
-  } else {
-    setError(result.message || "Registration failed");
-  }
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+
+    const result = await register(name, email, password, phone);
+
+    if (result.success) {
+      setMessage("Registered successfully! Check your email for the verification code.");
+      navigate("/verify", { state: { email } });
+    } else {
+      setError(result.message || "Registration failed");
+    }
+  };
 
   return (
     <>
@@ -61,6 +63,7 @@ const handleSubmit = async (e) => {
             {error && <div className="text-danger mb-2">{error}</div>}
 
             <Form onSubmit={handleSubmit}>
+              {/* Full Name */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaUser />
@@ -80,6 +83,7 @@ const handleSubmit = async (e) => {
                 />
               </Form.Group>
 
+              {/* Email */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaUser />
@@ -94,6 +98,7 @@ const handleSubmit = async (e) => {
                 />
               </Form.Group>
 
+              {/* Phone */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaPhone />
@@ -107,18 +112,34 @@ const handleSubmit = async (e) => {
                 />
               </Form.Group>
 
+              {/* Password with Eye Icon */}
               <Form.Group className="mb-4 position-relative">
                 <span className="position-absolute ps-3 pt-2 text-muted">
                   <FaLock />
                 </span>
+
                 <Form.Control
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   style={{ paddingLeft: "40px", height: "45px" }}
                 />
+
+                <span
+                  className="position-absolute"
+                  style={{
+                    right: "15px",
+                    top: "12px",
+                    cursor: "pointer",
+                    color: "#777",
+                    userSelect: "none",
+                  }}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </Form.Group>
 
               <Button
