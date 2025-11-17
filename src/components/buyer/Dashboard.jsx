@@ -4,6 +4,7 @@ import Slides from './Slides'
 import Products from './Products'
 import Footer from './Footer'
 import ProductQueue from './ProductQueue'
+import CategoryNavBar from './StaticNavbar'
 
 export default function Dashboard() {
 

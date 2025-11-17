@@ -88,7 +88,7 @@ export default function NavBar() {
         .search-wrapper { display: flex; align-items: center; transition: width 0.3s ease; }
       
       @media (max-width: 991px) {
-          .navbar-brand { position:absolute; left: 40% !important; top:0%; display:none }
+          .navbar-brand { position:absolute; left: 23% !important; top:0%;  }
           .navbar-collapse { border-radius: 0 0 8px 8px; position:relative; top:1px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
           .navbar-collapse .nav-link { transition: background-color 0.3s ease, color 0.3s ease; border-radius: 4px; }
           .navbar-collapse .nav-link:hover { background-color: #e6f4ea; color: #198754 !important; }
@@ -99,7 +99,7 @@ export default function NavBar() {
       <Navbar
         bg="light"
         expand="lg"
-        className="py-0 shadow-sm navbar-modern position-sticky top-0 w-100"
+        className="py-0 navbar-modern position-sticky top-0 w-100"
         style={{ height: "55px", position: "relative", zIndex: 1030 }}
       >
         <Container fluid className="px-md-5 d-flex align-items-center justify-content-between">
