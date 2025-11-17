@@ -144,7 +144,7 @@ export default function Product() {
   return (
     <>
       <Navbar />
-      <Container className="my-5">
+      <Container className="my-5 overflow-hidden ">
         <Row className="gx-5">
           {/* Product Image */}
           <Col xs={12} lg={5} className="d-flex justify-content-center mb-4 mb-lg-0">
