@@ -44,7 +44,8 @@ export default function VerifyEmail() {
 
     try {
       const verificationCode = code.join("");
-      const res = await axios.post("https://e-commerce-shopify-theta.vercel.app/api/auth/verify", {
+      const res = await axios.post("https://e-commerce-shopify-backend.onrender.com/api/auth/verify", {
+
         email,
         code: verificationCode,
       });
