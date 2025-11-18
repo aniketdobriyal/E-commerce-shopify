@@ -186,7 +186,7 @@ export default function NavBar() {
           <Navbar.Brand as={Link} to="/" className="my-2 brand-hover">
             <div className="naina-bazar-logo-container">
               <span className="naina-bazar-logo-N-wrapper p-0 m-0">N</span>
-              <span className="naina-bazar-logo-text p-0 m-0">aina Bazar</span>
+              <span className="naina-bazar-logo-text p-0 m-0">ina Bazar</span>
             </div>
           </Navbar.Brand>
 
