@@ -6,17 +6,17 @@ import { Link } from 'react-router-dom';
 function Slides() {
   const slides = [
     {
-      img: 'images/Gemini_Generated_Image_jxxvpzjxxvpzjxxv.png',
+      img: 'https://deebaco.com/cdn/shop/files/new_arrivals_-_hp_desk.jpg?v=1726056327&width=1100',
       title: 'Effortless Style',
       subtitle: 'Discover the Spring Collection',
     },
     {
-      img: 'images/Gemini_Generated_Image_ed4wkfed4wkfed4w.png',
+      img: 'https://cdn.shopify.com/s/files/1/2463/7443/files/Ladies_Replica_Banner_1.4.1_1000x1000.jpg?v=1602064991',
       title: 'Luxury You Deserve',
       subtitle: 'Experience our Premium Fashion Range',
     },
     {
-      img: 'images/fashionable-clothes-hanging-hanger-generative-ai_220873-19121.png',
+      img: 'https://www.verymuchindian.com/cdn/shop/files/3_eabc823d-b983-44fa-88cb-198ea72de7bb.png?v=1704548973',
       title: 'New Arrivals',
       subtitle: 'Trendy looks for every season',
     },
@@ -26,7 +26,7 @@ function Slides() {
     <div className="hero-section ">
       <Carousel interval={3000} pause={false} indicators={true} controls={true}>
         {slides.map((slide, index) => (
-          <Carousel.Item key={index} style={{ maxHeight: '60vh' }}>
+          <Carousel.Item key={index} style={{ maxHeight: '50vh' }}>
             <img
               className="d-block w-100"
               src={slide.img}
@@ -38,7 +38,7 @@ function Slides() {
               }}
             />
 
-            <Carousel.Caption
+    {/*}        <Carousel.Caption
               className="text-start"
               style={{
                 top: '40%',
@@ -80,8 +80,12 @@ function Slides() {
 </Button>
 
             </Carousel.Caption>
+
+            */}
           </Carousel.Item>
         ))}
+
+
       </Carousel>
     </div>
   );
