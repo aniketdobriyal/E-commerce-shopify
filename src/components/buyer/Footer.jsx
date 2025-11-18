@@ -9,7 +9,7 @@ function Footer() {
       {/* Embedded CSS for styling & hover effects */}
       <style>{`
         .footer {
-          background-color: #f8f9fa;
+          background-color: #eff3f7ff;
           padding: 50px 0 30px;
           border-top: 1px solid #eaeaea;
           font-family: 'Inter', sans-serif;

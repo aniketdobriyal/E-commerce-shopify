@@ -36,7 +36,7 @@ export default function NewArrival() {
   };
 
   return (
-    <>
+    <div style={{background:"#f9f9f9"}}>
       <Navbar />
 
       <Container className="py-4 my-5" style={{ background: "#F8F9FA" }}>
@@ -220,6 +220,6 @@ export default function NewArrival() {
       </Container>
 
       <Footer />
-    </>
+    </div>
   );
 }

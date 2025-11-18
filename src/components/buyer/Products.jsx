@@ -61,6 +61,15 @@ function Products() {
           padding-left: 1rem;
           padding-right: 1rem;
         }
+        
+        /* ⭐ Add 2-line description truncation */
+        .text-truncate-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
         @media (max-width: 576px) {
           .product-card {
             margin-bottom: 0.8rem;
@@ -81,15 +90,10 @@ function Products() {
                 <Card
                   as={Link}
                   to={`/product/${card.id}`}
-                  
-                  className="border-0   h-100 text-decoration-none text-dark product-card"
-                 
+                  className="border-0 h-100 text-decoration-none text-dark product-card"
                 >
-                  <div
-                  
-                    className="p-3 d-flex align-items-center  justify-content-center"
-                    style={{ height: '200px', backgroundColor: '#f9f9f9' }}
-                  >
+                  <div className="p-3 d-flex align-items-center justify-content-center"
+                    style={{ height: '200px', backgroundColor: '#f9f9f9' }}>
                     <Card.Img
                       variant="top"
                       src={card.image}
@@ -97,11 +101,16 @@ function Products() {
                       style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                     />
                   </div>
- 
-                  <Card.Body className="d-flex flex-column "  style={{background:"#F8F9FA"}}>
+
+                  <Card.Body className="d-flex flex-column" style={{background:"#F8F9FA"}}>
                     <Card.Title className="text-dark text-truncate mb-1">
                       {card.title}
                     </Card.Title>
+
+                    {/* ⭐ ADDED DESCRIPTION (2 lines only) */}
+                    <p className="text-muted small text-truncate-2 mb-1">
+                      {card.description}
+                    </p>
 
                     <StarRating rating={card.rating?.rate || 0} />
 

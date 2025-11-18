@@ -33,7 +33,7 @@ export default function Accessories() {
   };
 
   return (
-    <>
+    <div style={{background:"#f9f9f9"}}>
       <Navbar />
       <Container className="py-4 my-5" style={{background:"#F8F9FA"}}>
         <h2 className="fw-bold fs-4 mb-4" style={{ color: "#494949" }}>
@@ -173,6 +173,6 @@ export default function Accessories() {
         </Row>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 }

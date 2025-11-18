@@ -36,7 +36,7 @@ function ProductQueue({ title = "Trending Products" }) {
   };
 
   return (
-    <div className="product-queue-section">
+    <div className="product-queue-section"  style={{  background: " #f9f9f9"}}>
       <h4 className="product-queue-title">{title}</h4>
 
       {loading ? (
@@ -97,12 +97,12 @@ function ProductQueue({ title = "Trending Products" }) {
             <FaChevronRight />
           </Button>
 
-          <div className="product-queue-container" ref={containerRef}>
+          <div className="product-queue-container"  ref={containerRef}>
             {products.slice(0, 10).map((product) => (
               <Card
                 as={Link}
                 to={`/product/${product.id}`}
-                key={product.id}
+                key={product.id}  
                 className="text-decoration-none text-dark product-card-horizontal"
               >
                 <Card.Img variant="top" src={product.image} alt={product.title} />

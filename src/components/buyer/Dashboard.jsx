@@ -9,7 +9,7 @@ import CategoryNavBar from './StaticNavbar'
 export default function Dashboard() {
 
   return (
-    <div>
+    <div style={{  background: " #f9f9f9"}}>
      
       <Navbar/>
       

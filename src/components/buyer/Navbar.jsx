@@ -23,6 +23,8 @@ export default function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
   const searchRef = useRef(null);
   const location = useLocation();
+
+
   const navigate = useNavigate();
 
   const UserIconToggle = React.forwardRef(({ onClick }, ref) => (
@@ -84,14 +86,91 @@ export default function NavBar() {
         .dropdown-divider { border-top: 1px solid #ddd; margin: 0.3rem 0; }
         .dropdown-toggle::after { display: none; }
         .search-input { width: ${showSearch ? "180px" : "0"}; opacity: ${showSearch ? "1" : "0"}; padding: ${showSearch ? "0 0.5rem" : "0"}; border: 1px solid #ced4da; border-radius: 20px; transition: all 0.3s ease; height: 32px; font-size: 0.9rem; margin-right: 0.5rem; }
-        .text-gradient-red { background: linear-gradient(90deg, #91628aff, #f69b9bff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+        .text-gradient-red { background: linear-gradient(90deg, #006b0bff, #00621dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
         .search-wrapper { display: flex; align-items: center; transition: width 0.3s ease; }
-      
-      @media (max-width: 991px) {
-          .navbar-brand { position:absolute; left: 23% !important; top:0%;  }
-          .navbar-collapse { border-radius: 0 0 8px 8px; position:relative; top:1px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-          .navbar-collapse .nav-link { transition: background-color 0.3s ease, color 0.3s ease; border-radius: 4px; }
-          .navbar-collapse .nav-link:hover { background-color: #e6f4ea; color: #198754 !important; }
+
+        /* Custom Logo Styles */
+        .naina-bazar-logo-container {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif; /* A modern, clean font, ensure it's imported or available */
+            line-height: 1;
+        }
+
+        .naina-bazar-logo-N-wrapper {
+            position: relative;
+            display: inline-block;
+            font-size: 2.2rem; /* Size of the 'N' */
+            font-weight: 900; /* Extra bold for the 'N' */
+            background: linear-gradient(90deg, #6c5ce7, #fd79a8); /* Vibrant gradient for N */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent; /* Fallback */
+            margin-right: 5px; /* Space between N and aina */
+            padding-right: 5px; /* To make room for cart elements */
+            top: -2px; /* Adjust vertical alignment */
+        }
+
+        /* Shopping cart handle - ::before */
+        .naina-bazar-logo-N-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -10px; /* Adjust handle position */
+            left: -15px; /* Adjust handle position */
+            width: 0px; /* Width of handle */
+            height: 5px; /* Thickness of handle */
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe); /* Gradient for handle */
+            border-radius: 3px;
+            transform: rotate(-10deg); /* Slight angle */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Shopping cart wheels - ::after */
+        .naina-bazar-logo-N-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Position wheels below N */
+            left: -8px; /* First wheel position */
+            width: 0px; /* Wheel size */
+            height: 10px; /* Wheel size */
+            background: linear-gradient(45deg, #00b894, #55efc4); /* Green gradient for wheels */
+            border-radius: 50%; /* Make it round */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            /* Create a second wheel using another pseudo-element or a box-shadow trick */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2), 25px 0 0 0 rgba(0, 184, 148, 0.7); /* Second wheel */
+        }
+        
+        .naina-bazar-logo-text {
+            font-size: 1.5rem; /* Size of "AINA BAZAR" */
+            font-weight: 600;
+            color: #333; /* Dark color for contrast */
+            letter-spacing: -1px; /* Tighter letter spacing */
+        }
+
+        .naina-bazar-logo-bag {
+            margin-left: 8px; /* Space before the shopping bag icon */
+            font-size: 1.6rem; /* Size of the shopping bag */
+            color: #00b894; /* Green color for the bag */
+            position: relative;
+            top: 2px;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-brand { 
+                position:absolute; 
+               
+                top:0%; 
+                margin: auto 30vw ;
+                 
+                /* Adjust font sizes for smaller screens if needed */
+                .naina-bazar-logo-N-wrapper { font-size: 1.8rem; }
+                .naina-bazar-logo-text { font-size: 1.2rem; }
+                .naina-bazar-logo-bag { font-size: 1.3rem; }
+            }
+            .navbar-collapse { border-radius: 0 0 8px 8px; position:relative; top:1px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+            .navbar-collapse .nav-link { transition: background-color 0.3s ease, color 0.3s ease; border-radius: 4px; }
+            .navbar-collapse .nav-link:hover { background-color: #e6f4ea; color: #198754 !important; }
         }
       `}
       </style>
@@ -99,13 +178,16 @@ export default function NavBar() {
       <Navbar
         bg="light"
         expand="lg"
-        className="py-0 navbar-modern position-sticky top-0 w-100"
-        style={{ height: "55px", position: "relative", zIndex: 1030 }}
+        className="py-0 navbar-modern shadow-sm position-sticky top-0 w-100"
+        style={{ height: "55px", position: "relative", zIndex: 1030, }}
       >
         <Container fluid className="px-md-5 d-flex align-items-center justify-content-between">
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-2 my-2 p-1 border-0" />
-          <Navbar.Brand as={Link} to="/" className="fs-3 fw-bold text-gradient-red fst-italic my-2 brand-hover">
-            Naina Bazar
+          <Navbar.Brand as={Link} to="/" className="my-2 brand-hover">
+            <div className="naina-bazar-logo-container">
+              <span className="naina-bazar-logo-N-wrapper p-0 m-0">N</span>
+              <span className="naina-bazar-logo-text p-0 m-0">aina Bazar</span>
+            </div>
           </Navbar.Brand>
 
           <Navbar.Collapse id="basic-navbar-nav">
@@ -154,7 +236,7 @@ export default function NavBar() {
                   <Nav.Link onClick={() => openProfileSection("seller")} className="d-flex align-items-center py-3 text-dark"><FaStore className="me-2" /> Seller Account</Nav.Link>
 
                   {/* Sign In / Logout */}
-                  <Nav.Link onClick={handleAuthClick} className="d-flex align-items-center py-3 text-white  rounded"><FaUserCircle className="me-2" /> {user ? "Logout" : "Sign In"}</Nav.Link>
+                  <Nav.Link onClick={handleAuthClick} className="d-flex align-items-center py-3 text-white rounded"><FaUserCircle className="me-2" /> {user ? "Logout" : "Sign In"}</Nav.Link>
                 </div>
               </div>
             </div>
@@ -165,7 +247,7 @@ export default function NavBar() {
         <div className="d-flex align-items-center flex-nowrap position-absolute" style={{ top: 0, right: 0, height: "55px", padding: "0 1rem", zIndex: 1200 }}>
           <div className="search-wrapper" ref={searchRef}>
             <input type="text" className="search-input" placeholder="Search..." autoFocus={showSearch} />
-            <button className="btn p-2 border-0 icon-hover" onClick={() => setShowSearch((prev) => !prev)}><FaSearch size={22} className="text-dark" /></button>
+            <button className="btn p-0 border-0 icon-hover" onClick={() => setShowSearch((prev) => !prev)}><FaSearch size={22} className="text-dark" /></button>
           </div>
 
           <div style={{ position: "relative" }} className="d-flex align-items-center ms-2">
@@ -191,7 +273,7 @@ export default function NavBar() {
             </Dropdown>
           </div>
 
-          <Link to="/cart" className="btn p-2 border-0 ms-2 icon-hover"><FaShoppingCart size={22} className="text-dark" /></Link>
+          <Link to="/cart" className="btn p-0 border-0 ms-2 icon-hover"><FaShoppingCart size={22} className="text-dark" /></Link>
         </div>
       </Navbar>
     </>
